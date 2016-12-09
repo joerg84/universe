@@ -1,0 +1,19 @@
+{
+ "packagingVersion": "3.0",
+ "name": "neo4j",
+ "version": "3.1-0.0.1",
+ "maintainer": "joerg@mesosphere.io",
+ "description": "This is a single Neo4j container, which is not suited for HA setups. Neo4J is a popular graph database. See documentation for details: https://github.com/dcos/examples/tree/master/1.8/neo4j",
+ "website": "http://www.neo4j.com",
+ "framework": false,
+ "tags": ["mesosphere", "service", "neo4j", "storage"],
+ "licenses": [
+   {
+     "name": "GPL v3 license or Neo4j Commercial/Evaluation/Education License",
+     "url": "https://neo4j.com/licensing/"
+   }
+ ],
+ "postInstallNotes": "Neo4J installed!",
+ "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Neo4J requires a single node with 2GB of RAM and 1 CPU. ",
+ "postUninstallNotes": "Thank you for using Redis"
+}

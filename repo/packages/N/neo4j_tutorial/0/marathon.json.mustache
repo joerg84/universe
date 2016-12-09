@@ -1,0 +1,89 @@
+{  
+  "id":"{{service.name}}",
+  "cpus":{{neo4j.cpus}},
+  "mem":{{neo4j.mem}},
+  "instances":1,
+  "disk": 8000,
+  "container":{  
+    "type":"DOCKER",
+    "docker":{  
+      "image":"{{resource.assets.container.docker.neo4j}}",
+      "network":"BRIDGE",
+      "forcePullImage":true,
+      "portMappings":[
+        {
+           "hostPort":0,
+           "containerPort":7474,
+           "servicePort": 10001,
+           "name":"http",
+           "protocol":"tcp",
+            "labels":{
+              "VIP_0":"7.4.7.4:7474"
+            }
+        },
+        {
+           "hostPort":0,
+           "containerPort":7473,
+           "name":"https",
+           "protocol":"tcp",
+            "labels":{
+              "VIP_0":"7.4.7.4:7473"
+            }
+        },
+        {
+           "hostPort":0,
+           "name":"bolt",
+           "containerPort":7687,
+           "protocol":"tcp",
+            "labels":{
+              "VIP_0":"7.4.7.4:7687"
+            }
+        }
+      ]
+    },
+    "volumes":[  
+      {  
+        "containerPath":"data",
+        "mode":"RW",
+        "persistent":{  
+          "type":"root",
+          "size":8000
+        }
+      },
+      {  
+        "containerPath":"/data",
+        "hostPath":"data",
+        "mode":"RW"
+      }
+    ]
+  },
+  "env":{  
+    "NEO4J_AUTH":"neo4j/dcos",
+    "NEO4J_dbms_memory_heap_maxSize":"1500M",
+    "NEO4J_dbms_connectors_defaultAdvertisedAddress":"7.4.7.4"
+  },
+  "healthChecks":[
+    {
+      "http": { "path": "/", "scheme": "HTTP", "endpoint": "http" },
+      "timeoutSeconds":10,
+      "gracePeriodSeconds":240,
+      "intervalSeconds":10,
+      "maxConsecutiveFailures":10
+    }
+  ],
+  "updateStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  },
+  "residency": {
+    "relaunchEscalationTimeoutSeconds": 10,
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+ "labels":{
+    "HAPROXY_0_VHOST":"your.public.elb.amazonaws.com",
+    "HAPROXY_GROUP":"external",
+     "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  }
+}
