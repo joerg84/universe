@@ -1,8 +1,9 @@
 {
   "assets": {
     "container": {
+      "type": "MESOS",
       "docker": {
-        "framework": "docker.io/arangodb/arangodb-mesos-framework:3.2-build2"
+        "framework": "docker.io/dothebart/arangodb-mesos-framework:3.2-build2"
       }
     }
   },
