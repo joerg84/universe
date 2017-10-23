@@ -3,24 +3,24 @@
   "cpus": {{arangodb.framework-cpus}},
   "mem": {{arangodb.framework-mem}},
   "portDefinitions": [
-  {
-    "port": {{arangodb.proxy-port}},
-    "protocol": "tcp",
-    "name": "proxy",
-    "labels": {}
-  },
-  {
-    "port": {{arangodb.framework-port}},
-    "protocol": "tcp",
-    "name": "framework",
-    "labels": {}
-  },
-  {
-    "port": 0,
-    "protocol": "tcp",
-    "name": "mesos",
-    "labels": {}
-  }
+    {
+      "port": {{arangodb.proxy-port}},
+      "protocol": "tcp",
+      "name": "proxy",
+      "labels": {}
+    },
+    {
+      "port": {{arangodb.framework-port}},
+      "protocol": "tcp",
+      "name": "framework",
+      "labels": {}
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "mesos",
+      "labels": {}
+    }
   ],
   "instances": {{arangodb.framework-instances}},
   "args": [
@@ -57,7 +57,6 @@
     "--arangodb_additional_coordinator_args={{arangodb.arangodb-additional-coordinator-args}}",
     "--arangodb_force_pull_image={{arangodb.arangodb-force-pull-image}}"
   ],
-
   "env": {
     "ARANGODB_WEBUI_HOST": "{{arangodb.webui-host}}",
     "ARANGODB_WEBUI_PORT": "{{arangodb.framework-port}}",
@@ -65,15 +64,11 @@
     "ARANGODB_SECRET": "{{arangodb.secret}}"
   },
   "container": {
-    "type": "MESOS",
-    "mesos": {
-      "image": {
-        "type": 2,
-        "docker": {
-          "name": "{{resource.assets.container.docker.framework}}",
-        },
-        "cached": false
-      }
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.framework}}",
+      "forcePullImage": true,
+      "network": "HOST"
     }
   },
   "healthChecks": [

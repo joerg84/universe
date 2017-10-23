@@ -187,7 +187,7 @@
         "arangodb-docker-image": {
           "description": "Docker image to run arangodb.",
           "type": "string",
-          "default": "arangodb/arangodb-mesos:3.2"
+          "default": "dothebart/arangodb-mesos:3.2"
         },
 
         "arangodb-privileged-image": {
